@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timepact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* mainGradient light from Gradients.swift */
+    --bg-top:    #FCEFEC; /* (0.99,0.97,0.95) */
+    --bg-mid:    #F7F2EB; /* (0.97,0.95,0.92) */
+    --bg-bot:    #F2EDE0; /* (0.95,0.93,0.88) */
+
+    --brown:     #52330F;  /* epochTextColor approx */
+    --amber:     #9B6A1E;
+    --amber-dim: rgba(155,106,30,0.25);
+    --text:      rgba(82,51,15,0.85);
+    --muted:     rgba(82,51,15,0.50);
+    --dim:       rgba(82,51,15,0.08);
+    --card-bg:   rgba(255,255,255,0.55);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bot) 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── BACKGROUND COLUMNS ── */
+  .bg-columns {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .col-left, .col-right {
+    position: absolute;
+    top: 0;
+    width: 210px;
+    display: flex;
+    flex-direction: column;
+  }
+  .col-left  { left: 0; }
+  .col-right { right: 0; text-align: right; }
+
+  .era-item {
+    padding: 16px 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--brown);
+    opacity: 0;
+    transition: opacity 2s ease;
+  }
+
+  .era-item.visible { opacity: 0.30; }
+  .era-item.bright  { opacity: 0.55; }
+
+  .era-item .year {
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: linear-gradient(to bottom, rgba(252,239,236,0.97) 0%, rgba(252,239,236,0) 100%);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    letter-spacing: 0.25em;
+    color: var(--amber);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--amber); }
+
+  .lang-select {
+    background: transparent;
+    border: 1px solid var(--amber-dim);
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .lang-select:hover { border-color: var(--amber); color: var(--amber); }
+  .lang-select option { background: #f7f2eb; }
+
+  /* ── MAIN ── */
+  main { position: relative; z-index: 10; }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 260px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 1100px) { section { padding: 100px 160px 60px; } }
+  @media (max-width: 800px)  {
+    section { padding: 100px 36px 60px; }
+    .col-left, .col-right { width: 100px; }
+    .era-item { font-size: 11px; padding: 12px 10px; }
+    .nav-links { gap: 16px; }
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    justify-content: flex-end;
+    padding-bottom: 130px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(48px, 8vw, 92px);
+    font-weight: 600;
+    color: var(--brown);
+    line-height: 1;
+    letter-spacing: 0.06em;
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.4vw, 25px);
+    font-style: italic;
+    color: var(--text);
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+    max-width: 520px;
+    line-height: 1.55;
+    margin-bottom: 44px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 13px 34px;
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+  .cta-btn:hover { background: var(--amber); color: #fff; }
+
+  /* ── SECTION HEADINGS ── */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.8vw, 46px);
+    font-weight: 300;
+    color: var(--brown);
+    line-height: 1.2;
+    margin-bottom: 30px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--muted);
+    max-width: 580px;
+    margin-bottom: 18px;
+  }
+
+  .divider {
+    width: 50px;
+    height: 1px;
+    background: var(--amber-dim);
+    margin: 50px 0;
+  }
+
+  /* ── SCALES ── */
+  .scales { display: flex; flex-direction: column; max-width: 540px; margin-top: 28px; }
+
+  .scale-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 22px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--dim);
+  }
+
+  .scale-num {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    color: var(--amber);
+    letter-spacing: 0.1em;
+    min-width: 72px;
+    padding-top: 3px;
+  }
+
+  .scale-text strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--brown);
+    margin-bottom: 5px;
+  }
+  .scale-text p { font-size: 13px; margin: 0; }
+
+  /* ── FEATURES ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 36px;
+    max-width: 660px;
+  }
+
+  .feature {
+    padding: 28px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--dim);
+    transition: border-color 0.4s, background 0.4s;
+  }
+  .feature:hover { border-color: var(--amber-dim); background: rgba(255,255,255,0.75); }
+
+  .feature-icon { font-size: 20px; margin-bottom: 12px; display: block; }
+
+  .feature-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--brown);
+    margin-bottom: 9px;
+    text-transform: uppercase;
+  }
+  .feature p { font-size: 13px; line-height: 1.7; margin: 0; }
+
+  /* ── CONTACT ── */
+  .contact-links { display: flex; flex-direction: column; gap: 0; margin-top: 28px; max-width: 480px; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    transition: color 0.3s;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--dim);
+  }
+  .contact-link:hover { color: var(--amber); }
+
+  .contact-icon {
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--dim);
+    background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.3s;
+  }
+  .contact-link:hover .contact-icon { border-color: var(--amber-dim); }
+
+  .contact-badge {
+    font-size: 10px;
+    color: var(--muted);
+    margin-left: 6px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── PRIVACY ── */
+  .privacy-block { margin-bottom: 32px; }
+  .privacy-block h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--brown);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .privacy-block p { max-width: 660px; }
+  .privacy-link { color: var(--amber); text-decoration: none; }
+  .privacy-link:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 36px;
+    border-top: 1px solid var(--dim);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* language */
+  [data-lang]     { display: none; }
+  [data-lang].active { display: block; }
+  .il { display: none; }
+  .il.active { display: inline; }
+</style>
+</head>
+<body>
+
+<!-- COLUMNS -->
+<div class="bg-columns">
+  <div class="col-left"  id="colLeft"></div>
+  <div class="col-right" id="colRight"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">TIMEPACT</a>
+  <ul class="nav-links">
+    <li><a href="#about"    data-nav="about">About</a></li>
+    <li><a href="#features" data-nav="features">Features</a></li>
+    <li><a href="#contact"  data-nav="contact">Contact</a></li>
+    <li><a href="#privacy"  data-nav="privacy">Privacy</a></li>
+    <li>
+      <select class="lang-select" id="langSelect">
+        <option value="en">EN</option>
+        <option value="de">DE</option>
+        <option value="es">ES</option>
+        <option value="zh">中文</option>
+        <option value="ru">RU</option>
+      </select>
+    </li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow">
+    <span class="il active" data-l="en">iOS Application</span>
+    <span class="il" data-l="de">iOS-Anwendung</span>
+    <span class="il" data-l="es">Aplicación iOS</span>
+    <span class="il" data-l="zh">iOS 应用</span>
+    <span class="il" data-l="ru">iOS-приложение</span>
+  </p>
+  <h1>TIMEPACT</h1>
+  <p class="hero-tagline">
+    <span class="il active" data-l="en">4.6 billion years of history — in the palm of your hand.</span>
+    <span class="il" data-l="de">4,6 Milliarden Jahre Geschichte — in Ihrer Hand.</span>
+    <span class="il" data-l="es">4.600 millones de años de historia — en la palma de tu mano.</span>
+    <span class="il" data-l="zh">46亿年的历史——尽在掌中。</span>
+    <span class="il" data-l="ru">4,6 миллиарда лет истории — в ладони.</span>
+  </p>
+  <a href="#" class="cta-btn">
+    <span class="il active" data-l="en">Download on App Store</span>
+    <span class="il" data-l="de">Im App Store laden</span>
+    <span class="il" data-l="es">Descargar en App Store</span>
+    <span class="il" data-l="zh">在 App Store 下载</span>
+    <span class="il" data-l="ru">Скачать в App Store</span>
+  </a>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <p class="section-label">
+      <span class="il active" data-l="en">About</span>
+      <span class="il" data-l="de">Über die App</span>
+      <span class="il" data-l="es">Acerca de</span>
+      <span class="il" data-l="zh">关于</span>
+      <span class="il" data-l="ru">О приложении</span>
+    </p>
+    <h2>
+      <span class="il active" data-l="en">A timeline without limits</span>
+      <span class="il" data-l="de">Eine Zeitleiste ohne Grenzen</span>
+      <span class="il" data-l="es">Una línea del tiempo sin límites</span>
+      <span class="il" data-l="zh">一条没有边界的时间线</span>
+      <span class="il" data-l="ru">Временна́я шкала без границ</span>
+    </h2>
+    <p data-lang="en" class="active">Timepact is an interactive timeline spanning the entire history of our planet — from the formation of Earth 4.6 billion years ago to the present day. Most history apps cover centuries. Timepact covers everything.</p>
+    <p data-lang="de">Timepact ist eine interaktive Zeitleiste, die die gesamte Geschichte unseres Planeten umfasst — von der Entstehung der Erde vor 4,6 Milliarden Jahren bis heute.</p>
+    <p data-lang="es">Timepact es una línea del tiempo interactiva que abarca toda la historia de nuestro planeta, desde la formación de la Tierra hace 4.600 millones de años hasta el presente.</p>
+    <p data-lang="zh">Timepact 是一款互动时间线应用，涵盖地球46亿年的完整历史——从地球形成之初直到今天。</p>
+    <p data-lang="ru">Timepact — интерактивная временна́я шкала, охватывающая всю историю нашей планеты: от формирования Земли 4,6 миллиарда лет назад до наших дней.</p>
+
+    <p data-lang="en" class="active">Three modes of exploration — Geological, Prehistoric, and Historical — each calibrated to its own scale. Pinch and zoom through billions of years, add your own events, browse curated collections, and discover what happened on this day throughout deep time.</p>
+    <p data-lang="de">Drei Erkundungsmodi — Geologisch, Prähistorisch und Historisch — jeweils auf ihren eigenen Maßstab kalibriert. Zoomen Sie durch Milliarden von Jahren, fügen Sie eigene Ereignisse hinzu und entdecken Sie, was an diesem Tag geschah.</p>
+    <p data-lang="es">Tres modos de exploración — Geológico, Prehistórico e Histórico — cada uno calibrado a su escala. Navega por miles de millones de años, añade tus propios eventos y descubre qué ocurrió hoy a lo largo del tiempo profundo.</p>
+    <p data-lang="zh">三种探索模式——地质、史前和历史——各自针对其时间尺度校准。捏合缩放穿越数十亿年，添加自己的事件，发现深时中今天发生过什么。</p>
+    <p data-lang="ru">Три режима исследования — Геологический, Доисторический и Исторический — каждый откалиброван по своей шкале. Масштабируйте жестом, добавляйте события, узнавайте, что происходило в этот день на протяжении глубокого времени.</p>
+
+    <div class="divider"></div>
+
+    <p class="section-label">
+      <span class="il active" data-l="en">Three Scales</span>
+      <span class="il" data-l="de">Drei Maßstäbe</span>
+      <span class="il" data-l="es">Tres escalas</span>
+      <span class="il" data-l="zh">三种尺度</span>
+      <span class="il" data-l="ru">Три масштаба</span>
+    </p>
+    <div class="scales">
+      <div class="scale-item">
+        <div class="scale-num">4.6 Ga</div>
+        <div class="scale-text">
+          <strong><span class="il active" data-l="en">Geological</span><span class="il" data-l="de">Geologisch</span><span class="il" data-l="es">Geológico</span><span class="il" data-l="zh">地质</span><span class="il" data-l="ru">Геологический</span></strong>
+          <p data-lang="en" class="active">From Earth's formation through the Hadean, Archean, Proterozoic and Phanerozoic eons. Continents drift, life emerges, mass extinctions reshape everything.</p>
+          <p data-lang="de">Von der Entstehung der Erde durch das Hadaikum, Archaikum, Proterozoikum und Phanerozoikum. Kontinente wandern, Leben entsteht.</p>
+          <p data-lang="es">Desde la formación de la Tierra a través del Hadeico, Arcaico, Proterozoico y Fanerozoico. Los continentes derivan, la vida emerge.</p>
+          <p data-lang="zh">从地球形成，历经冥古宙、太古宙、元古宙和显生宙。大陆漂移，生命出现，大灭绝重塑一切。</p>
+          <p data-lang="ru">От формирования Земли через Катархей, Архей, Протерозой и Фанерозой. Дрейф континентов, зарождение жизни, массовые вымирания.</p>
+        </div>
+      </div>
+      <div class="scale-item">
+        <div class="scale-num">2.6 Ma</div>
+        <div class="scale-text">
+          <strong><span class="il active" data-l="en">Prehistoric</span><span class="il" data-l="de">Prähistorisch</span><span class="il" data-l="es">Prehistórico</span><span class="il" data-l="zh">史前</span><span class="il" data-l="ru">Доисторический</span></strong>
+          <p data-lang="en" class="active">The last 2.6 million years. Ice ages, the rise of hominids, migration across continents, the Neolithic revolution and the first cities.</p>
+          <p data-lang="de">Die letzten 2,6 Millionen Jahre. Eiszeitalter, Aufstieg der Hominiden, die neolithische Revolution und die ersten Städte.</p>
+          <p data-lang="es">Los últimos 2,6 millones de años. Eras glaciales, surgimiento de homínidos, la revolución neolítica y las primeras ciudades.</p>
+          <p data-lang="zh">近260万年。冰期、人属的兴起、跨大陆迁徙、新石器革命与最早的城市。</p>
+          <p data-lang="ru">Последние 2,6 миллиона лет. Ледниковые периоды, появление гоминид, неолитическая революция и первые города.</p>
+        </div>
+      </div>
+      <div class="scale-item">
+        <div class="scale-num">3500 BCE</div>
+        <div class="scale-text">
+          <strong><span class="il active" data-l="en">Historical</span><span class="il" data-l="de">Historisch</span><span class="il" data-l="es">Histórico</span><span class="il" data-l="zh">历史</span><span class="il" data-l="ru">Исторический</span></strong>
+          <p data-lang="en" class="active">From the invention of writing in Sumer to today. Empires, revolutions, discoveries — linked to Wikipedia in your language.</p>
+          <p data-lang="de">Von der Erfindung der Schrift in Sumer bis heute. Imperien, Revolutionen, Entdeckungen — verknüpft mit Wikipedia in Ihrer Sprache.</p>
+          <p data-lang="es">Desde la invención de la escritura en Sumer hasta hoy. Imperios, revoluciones, descubrimientos — vinculados a Wikipedia en tu idioma.</p>
+          <p data-lang="zh">从苏美尔文字发明到今天。帝国、革命、发现——以您的语言链接维基百科。</p>
+          <p data-lang="ru">От изобретения письменности в Шумере до наших дней. Империи, революции, открытия — со ссылками на Википедию на вашем языке.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="reveal">
+    <p class="section-label">
+      <span class="il active" data-l="en">Features</span><span class="il" data-l="de">Funktionen</span><span class="il" data-l="es">Funciones</span><span class="il" data-l="zh">功能</span><span class="il" data-l="ru">Возможности</span>
+    </p>
+    <h2>
+      <span class="il active" data-l="en">Everything you need to explore time</span>
+      <span class="il" data-l="de">Alles, um die Zeit zu erkunden</span>
+      <span class="il" data-l="es">Todo para explorar el tiempo</span>
+      <span class="il" data-l="zh">探索时间所需的一切</span>
+      <span class="il" data-l="ru">Всё для исследования времени</span>
+    </h2>
+    <div class="features-grid">
+      <div class="feature">
+        <span class="feature-icon">🌍</span>
+        <p class="feature-title"><span class="il active" data-l="en">Infinite Scale</span><span class="il" data-l="de">Unendliche Skala</span><span class="il" data-l="es">Escala infinita</span><span class="il" data-l="zh">无限尺度</span><span class="il" data-l="ru">Бесконечный масштаб</span></p>
+        <p data-lang="en" class="active">Pinch to zoom across billions of years. The timeline adapts its density and labels to any scale.</p>
+        <p data-lang="de">Zoomen Sie über Milliarden von Jahren. Die Zeitleiste passt sich an jeden Maßstab an.</p>
+        <p data-lang="es">Pellizca para hacer zoom a través de miles de millones de años.</p>
+        <p data-lang="zh">捏合以在数十亿年间无缝缩放。时间线自动适应任何尺度。</p>
+        <p data-lang="ru">Масштабируйте жестом через миллиарды лет. Шкала адаптируется к любому масштабу.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📚</span>
+        <p class="feature-title"><span class="il active" data-l="en">Collections</span><span class="il" data-l="de">Sammlungen</span><span class="il" data-l="es">Colecciones</span><span class="il" data-l="zh">合集</span><span class="il" data-l="ru">Коллекции</span></p>
+        <p data-lang="en" class="active">Organize events into thematic collections. Import and export to share timelines with others.</p>
+        <p data-lang="de">Ereignisse in thematischen Sammlungen. Import und Export zum Teilen.</p>
+        <p data-lang="es">Organiza eventos en colecciones temáticas. Importa y exporta para compartir.</p>
+        <p data-lang="zh">将事件整理成主题合集，导入导出与他人分享。</p>
+        <p data-lang="ru">Организуйте события в коллекции. Импортируйте и экспортируйте для обмена.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📖</span>
+        <p class="feature-title">Wikipedia</p>
+        <p data-lang="en" class="active">Every event links to Wikipedia in your language. "On This Day" surfaces discoveries from across history.</p>
+        <p data-lang="de">Jedes Ereignis verlinkt Wikipedia in Ihrer Sprache. "Heute in der Geschichte" enthüllt Entdeckungen.</p>
+        <p data-lang="es">Cada evento enlaza Wikipedia en tu idioma. "Hoy en la historia" desvela descubrimientos.</p>
+        <p data-lang="zh">每个事件链接到您语言的维基百科。"历史上的今天"揭示各时代的发现。</p>
+        <p data-lang="ru">Каждое событие ссылается на Википедию на вашем языке. «В этот день» — открытия из всей истории.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🏷️</span>
+        <p class="feature-title"><span class="il active" data-l="en">Tags & Colors</span><span class="il" data-l="de">Tags & Farben</span><span class="il" data-l="es">Etiquetas y colores</span><span class="il" data-l="zh">标签与颜色</span><span class="il" data-l="ru">Теги и цвета</span></p>
+        <p data-lang="en" class="active">Tag and color-code events for instant visual filtering. Your personal layer on top of history.</p>
+        <p data-lang="de">Ereignisse farbkodieren für sofortiges visuelles Filtern.</p>
+        <p data-lang="es">Etiqueta y codifica por colores para un filtrado visual instantáneo.</p>
+        <p data-lang="zh">为事件添加标签和颜色编码，实现即时视觉筛选。</p>
+        <p data-lang="ru">Теги и цвета для мгновенной фильтрации. Ваш личный слой поверх истории.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <p class="section-label">
+      <span class="il active" data-l="en">Contact</span><span class="il" data-l="de">Kontakt</span><span class="il" data-l="es">Contacto</span><span class="il" data-l="zh">联系</span><span class="il" data-l="ru">Контакты</span>
+    </p>
+    <h2>
+      <span class="il active" data-l="en">Get in touch</span>
+      <span class="il" data-l="de">Kontakt aufnehmen</span>
+      <span class="il" data-l="es">Ponerse en contacto</span>
+      <span class="il" data-l="zh">联系我们</span>
+      <span class="il" data-l="ru">Связаться</span>
+    </h2>
+    <p data-lang="en" class="active">Questions, feedback, or ideas? We'd love to hear from you.</p>
+    <p data-lang="de">Fragen, Feedback oder Ideen? Wir freuen uns von Ihnen zu hören.</p>
+    <p data-lang="es">¿Preguntas, comentarios o ideas? Nos encantaría saber de ti.</p>
+    <p data-lang="zh">有问题、反馈或想法？欢迎联系我们。</p>
+    <p data-lang="ru">Вопросы, отзывы, идеи — пишите.</p>
+
+    <div class="contact-links">
+      <!-- Email -->
+      <a href="mailto:lazyproperty@icloud.com" class="contact-link">
+        <span class="contact-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <polyline points="2,4 12,13 22,4"/>
+          </svg>
+        </span>
+        lazyproperty@icloud.com
+      </a>
+      <!-- Personal Telegram -->
+      <a href="https://t.me/lazyproperty" class="contact-link" target="_blank">
+        <span class="contact-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.93 3.24L2.29 10.9c-1.3.52-1.29 1.25-.24 1.57l4.98 1.56 11.54-7.28c.54-.33 1.04-.15.63.21L9.13 16.47l-.33 5.13c.49 0 .7-.22.97-.49l2.33-2.26 4.85 3.58c.89.49 1.53.24 1.75-.83l3.17-14.93c.32-1.3-.5-1.89-1.94-1.43z"/>
+          </svg>
+        </span>
+        @lazyproperty
+        <span class="contact-badge">
+          <span class="il active" data-l="en">personal</span>
+          <span class="il" data-l="de">persönlich</span>
+          <span class="il" data-l="es">personal</span>
+          <span class="il" data-l="zh">个人</span>
+          <span class="il" data-l="ru">личный</span>
+        </span>
+      </a>
+      <!-- Community Telegram -->
+      <a href="https://t.me/timepact" class="contact-link" target="_blank">
+        <span class="contact-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.93 3.24L2.29 10.9c-1.3.52-1.29 1.25-.24 1.57l4.98 1.56 11.54-7.28c.54-.33 1.04-.15.63.21L9.13 16.47l-.33 5.13c.49 0 .7-.22.97-.49l2.33-2.26 4.85 3.58c.89.49 1.53.24 1.75-.83l3.17-14.93c.32-1.3-.5-1.89-1.94-1.43z"/>
+          </svg>
+        </span>
+        @timepact
+        <span class="contact-badge">
+          <span class="il active" data-l="en">community</span>
+          <span class="il" data-l="de">Community</span>
+          <span class="il" data-l="es">comunidad</span>
+          <span class="il" data-l="zh">社区</span>
+          <span class="il" data-l="ru">группа</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy">
+  <div class="reveal">
+    <p class="section-label">
+      <span class="il active" data-l="en">Privacy Policy</span><span class="il" data-l="de">Datenschutzerklärung</span><span class="il" data-l="es">Política de privacidad</span><span class="il" data-l="zh">隐私政策</span><span class="il" data-l="ru">Политика конфиденциальности</span>
+    </p>
+    <h2>
+      <span class="il active" data-l="en">Your data stays on your device</span>
+      <span class="il" data-l="de">Ihre Daten bleiben auf Ihrem Gerät</span>
+      <span class="il" data-l="es">Tus datos permanecen en tu dispositivo</span>
+      <span class="il" data-l="zh">您的数据保留在您的设备上</span>
+      <span class="il" data-l="ru">Ваши данные остаются на устройстве</span>
+    </h2>
+
+    <div class="privacy-block">
+      <h3><span class="il active" data-l="en">Data Collection</span><span class="il" data-l="de">Datenerhebung</span><span class="il" data-l="es">Recopilación de datos</span><span class="il" data-l="zh">数据收集</span><span class="il" data-l="ru">Сбор данных</span></h3>
+      <p data-lang="en" class="active">Timepact does not collect, store, or transmit any personal data. All events, collections, and settings are stored locally on your device using Apple's CoreData framework.</p>
+      <p data-lang="de">Timepact erhebt, speichert oder überträgt keine personenbezogenen Daten. Alle Daten werden lokal auf Ihrem Gerät mit Apples CoreData-Framework gespeichert.</p>
+      <p data-lang="es">Timepact no recopila, almacena ni transmite ningún dato personal. Todo se almacena localmente usando CoreData de Apple.</p>
+      <p data-lang="zh">Timepact 不收集、存储或传输任何个人数据。所有内容均使用 Apple CoreData 本地存储在您的设备上。</p>
+      <p data-lang="ru">Timepact не собирает, не хранит и не передаёт никаких персональных данных. Все данные хранятся локально на устройстве через CoreData.</p>
+    </div>
+
+    <div class="privacy-block">
+      <h3>Wikipedia</h3>
+      <p data-lang="en" class="active">When searching for events or viewing "On This Day", the app makes requests to the public Wikipedia API. These requests contain no personal identifiers.</p>
+      <p data-lang="de">Bei der Suche nach Ereignissen stellt die App Anfragen an die öffentliche Wikipedia-API. Diese Anfragen enthalten keine persönlichen Identifikatoren.</p>
+      <p data-lang="es">Al buscar eventos, la app realiza solicitudes a la API pública de Wikipedia. Estas solicitudes no incluyen identificadores personales.</p>
+      <p data-lang="zh">搜索事件时，应用会向公共维基百科 API 发出请求，不包含任何个人标识符。</p>
+      <p data-lang="ru">При поиске событий приложение обращается к публичному API Википедии. Запросы не содержат личных идентификаторов.</p>
+    </div>
+
+    <div class="privacy-block">
+      <h3><span class="il active" data-l="en">Third Parties</span><span class="il" data-l="de">Dritte</span><span class="il" data-l="es">Terceros</span><span class="il" data-l="zh">第三方</span><span class="il" data-l="ru">Третьи лица</span></h3>
+      <p data-lang="en" class="active">Timepact contains no advertising, no analytics SDKs, no tracking, and no third-party data sharing of any kind.</p>
+      <p data-lang="de">Timepact enthält keine Werbung, keine Analyse-SDKs, kein Tracking und keine Datenweitergabe an Dritte.</p>
+      <p data-lang="es">Timepact no contiene publicidad, SDKs de análisis, rastreo ni intercambio de datos con terceros.</p>
+      <p data-lang="zh">Timepact 不含广告、分析 SDK、追踪器，也不与任何第三方共享数据。</p>
+      <p data-lang="ru">Timepact не содержит рекламы, аналитических SDK, трекеров и не передаёт данные третьим лицам.</p>
+    </div>
+
+    <div class="privacy-block">
+      <h3><span class="il active" data-l="en">Contact</span><span class="il" data-l="de">Kontakt</span><span class="il" data-l="es">Contacto</span><span class="il" data-l="zh">联系</span><span class="il" data-l="ru">Контакт</span></h3>
+      <p data-lang="en" class="active">Privacy questions: <a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+      <p data-lang="de">Datenschutzfragen: <a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+      <p data-lang="es">Preguntas de privacidad: <a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+      <p data-lang="zh">隐私问题：<a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+      <p data-lang="ru">Вопросы: <a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span style="font-family:'Cinzel',serif;letter-spacing:0.22em;color:var(--amber)">TIMEPACT</span>
+  &nbsp;·&nbsp;
+  <span id="fyear"></span>
+</footer>
+
+<script>
+const EVENTS = [
+  { year:"4.6 Ga", t:{en:"Formation of Earth",de:"Entstehung der Erde",es:"Formación de la Tierra",zh:"地球形成",ru:"Формирование Земли"} },
+  { year:"4.1 Ga", t:{en:"First liquid water",de:"Erstes flüssiges Wasser",es:"Primera agua líquida",zh:"最早的液态水",ru:"Первая жидкая вода"} },
+  { year:"3.8 Ga", t:{en:"First life — prokaryotes",de:"Erstes Leben",es:"Primera vida",zh:"最早的生命",ru:"Первая жизнь"} },
+  { year:"2.4 Ga", t:{en:"Great Oxidation Event",de:"Große Oxidation",es:"Gran Oxidación",zh:"大氧化事件",ru:"Великое окисление"} },
+  { year:"750 Ma", t:{en:"Snowball Earth",de:"Schneeball Erde",es:"Tierra bola de nieve",zh:"雪球地球",ru:"Земля-снежок"} },
+  { year:"541 Ma", t:{en:"Cambrian explosion",de:"Kambrische Explosion",es:"Explosión cámbrica",zh:"寒武纪大爆发",ru:"Кембрийский взрыв"} },
+  { year:"375 Ma", t:{en:"First tetrapods on land",de:"Erste Tetrapoden",es:"Primeros tetrápodos",zh:"首批四足动物",ru:"Первые тетраподы"} },
+  { year:"252 Ma", t:{en:"Permian extinction",de:"Perm-Aussterben",es:"Extinción del Pérmico",zh:"二叠纪大灭绝",ru:"Пермское вымирание"} },
+  { year:"230 Ma", t:{en:"First dinosaurs",de:"Erste Dinosaurier",es:"Primeros dinosaurios",zh:"最早的恐龙",ru:"Первые динозавры"} },
+  { year:"66 Ma",  t:{en:"End of dinosaurs",de:"Ende der Dinosaurier",es:"Fin de los dinosaurios",zh:"恐龙灭绝",ru:"Гибель динозавров"} },
+  { year:"55 Ma",  t:{en:"First primates",de:"Erste Primaten",es:"Primeros primates",zh:"最早的灵长类",ru:"Первые приматы"} },
+  { year:"6 Ma",   t:{en:"Human–chimp split",de:"Mensch-Schimpansen-Split",es:"Separación humano-chimpancé",zh:"人类与黑猩猩分化",ru:"Разделение человека и шимпанзе"} },
+  { year:"300 Ka", t:{en:"Homo sapiens appears",de:"Homo sapiens erscheint",es:"Aparece Homo sapiens",zh:"智人出现",ru:"Появление Homo sapiens"} },
+  { year:"70 Ka",  t:{en:"Out of Africa",de:"Aus-Afrika-Migration",es:"Migración fuera de África",zh:"走出非洲",ru:"Миграция из Африки"} },
+  { year:"12 Ka",  t:{en:"End of last ice age",de:"Ende der Eiszeit",es:"Fin de la glaciación",zh:"末次冰期结束",ru:"Конец ледникового периода"} },
+  { year:"10 Ka",  t:{en:"Agricultural revolution",de:"Agrarrevolution",es:"Revolución agrícola",zh:"农业革命",ru:"Аграрная революция"} },
+  { year:"3500 BCE",t:{en:"Writing invented in Sumer",de:"Schrift in Sumer",es:"Escritura en Sumer",zh:"苏美尔文字",ru:"Письменность в Шумере"} },
+  { year:"2560 BCE",t:{en:"Great Pyramid of Giza",de:"Große Pyramide",es:"Gran Pirámide",zh:"吉萨大金字塔",ru:"Пирамида в Гизе"} },
+  { year:"776 BCE", t:{en:"First Olympic Games",de:"Erste Olympische Spiele",es:"Primeros Juegos Olímpicos",zh:"第一届奥运会",ru:"Первые Олимпийские игры"} },
+  { year:"44 BCE",  t:{en:"Assassination of Caesar",de:"Ermordung Cäsars",es:"Asesinato de César",zh:"恺撒遇刺",ru:"Убийство Цезаря"} },
+  { year:"476 CE",  t:{en:"Fall of Western Rome",de:"Untergang Westroms",es:"Caída de Roma",zh:"西罗马灭亡",ru:"Падение Западного Рима"} },
+  { year:"1066 CE", t:{en:"Battle of Hastings",de:"Schlacht bei Hastings",es:"Batalla de Hastings",zh:"黑斯廷斯战役",ru:"Битва при Гастингсе"} },
+  { year:"1440 CE", t:{en:"Gutenberg's press",de:"Gutenbergs Druckpresse",es:"Imprenta de Gutenberg",zh:"古腾堡印刷机",ru:"Печатный станок Гутенберга"} },
+  { year:"1492 CE", t:{en:"Columbus reaches Americas",de:"Kolumbus in Amerika",es:"Colón llega a América",zh:"哥伦布抵达美洲",ru:"Колумб достигает Америки"} },
+  { year:"1687 CE", t:{en:"Newton's Principia",de:"Newtons Principia",es:"Principia de Newton",zh:"牛顿《原理》",ru:"«Начала» Ньютона"} },
+  { year:"1789 CE", t:{en:"French Revolution",de:"Französische Revolution",es:"Revolución Francesa",zh:"法国大革命",ru:"Французская революция"} },
+  { year:"1859 CE", t:{en:"Darwin: Origin of Species",de:"Darwin: Entstehung der Arten",es:"Darwin: El origen",zh:"达尔文《物种起源》",ru:"Дарвин: Происхождение видов"} },
+  { year:"1903 CE", t:{en:"First airplane flight",de:"Erster Flug",es:"Primer vuelo",zh:"首次飞行",ru:"Первый полёт"} },
+  { year:"1969 CE", t:{en:"Humans on the Moon",de:"Menschen auf dem Mond",es:"Humanos en la Luna",zh:"人类登月",ru:"Люди на Луне"} },
+  { year:"1991 CE", t:{en:"World Wide Web",de:"World Wide Web",es:"World Wide Web",zh:"万维网",ru:"Интернет"} },
+];
+
+let lang = 'en';
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('active', el.dataset.lang === l));
+  document.querySelectorAll('.il[data-l]').forEach(el => el.classList.toggle('active', el.dataset.l === l));
+  const navMap = {
+    about:    {en:'About',de:'Über die App',es:'Acerca de',zh:'关于',ru:'О приложении'},
+    features: {en:'Features',de:'Funktionen',es:'Funciones',zh:'功能',ru:'Возможности'},
+    contact:  {en:'Contact',de:'Kontakt',es:'Contacto',zh:'联系',ru:'Контакты'},
+    privacy:  {en:'Privacy',de:'Datenschutz',es:'Privacidad',zh:'隐私',ru:'Конфиденциальность'},
+  };
+  document.querySelectorAll('[data-nav]').forEach(a => {
+    const k = a.dataset.nav; if (navMap[k]) a.textContent = navMap[k][l] || navMap[k].en;
+  });
+  renderCols();
+}
+
+document.getElementById('langSelect').addEventListener('change', e => setLang(e.target.value));
+
+function renderCols() {
+  const L = document.getElementById('colLeft');
+  const R = document.getElementById('colRight');
+  L.innerHTML = ''; R.innerHTML = '';
+  const shuffled = [...EVENTS].sort(() => Math.random() - 0.5);
+  const half = Math.floor(shuffled.length / 2);
+  shuffled.slice(0, half).forEach(e => L.appendChild(makeItem(e)));
+  shuffled.slice(half).forEach(e => R.appendChild(makeItem(e)));
+  setTimeout(animateCols, 80);
+}
+
+function makeItem(e) {
+  const d = document.createElement('div');
+  d.className = 'era-item';
+  const y = document.createElement('span');
+  y.className = 'year';
+  y.textContent = e.year;
+  d.appendChild(y);
+  d.appendChild(document.createTextNode(e.t[lang] || e.t.en));
+  return d;
+}
+
+function animateCols() {
+  const items = [...document.querySelectorAll('.era-item')];
+  items.forEach(item => {
+    setTimeout(() => {
+      item.classList.add('visible');
+      if (Math.random() > 0.55) item.classList.add('bright');
+    }, Math.random() * 2500);
+  });
+
+  setInterval(() => {
+    document.querySelectorAll('.era-item').forEach(item => {
+      if (Math.random() > 0.72) {
+        item.classList.remove('visible', 'bright');
+        setTimeout(() => {
+          if (Math.random() > 0.3) item.classList.add('visible');
+          if (Math.random() > 0.55) item.classList.add('bright');
+        }, 1800 + Math.random() * 3000);
+      }
+    });
+  }, 3500);
+}
+
+// scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+document.getElementById('fyear').textContent = new Date().getFullYear();
+renderCols();
+</script>
+</body>
+</html>
