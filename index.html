@@ -402,8 +402,8 @@
     <li><a href="#about"    data-nav="about">About</a></li>
     <li><a href="#features" data-nav="features">Features</a></li>
     <li><a href="#contact"  data-nav="contact">Contact</a></li>
-    <li><a href="privacy.html">Privacy</a></li>
-    <li><a href="terms.html">Terms</a></li>
+    <li><a href="privacy.html" data-nav="privacy">Privacy</a></li> 
+    <li><a href="terms.html" data-nav="terms">Terms</a></li>       
     <li>
       <select class="lang-select" id="langSelect">
         <option value="en">EN</option>
@@ -700,15 +700,52 @@ function setLang(l) {
   lang = l;
   document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('active', el.dataset.lang === l));
   document.querySelectorAll('.il[data-l]').forEach(el => el.classList.toggle('active', el.dataset.l === l));
+  
   const navMap = {
-    about:    {en:'About',de:'Über die App',es:'Acerca de',zh:'关于',ru:'Слово'},
-    features: {en:'Features',de:'Funktionen',es:'Funciones',zh:'功能',ru:'Возможности'},
-    contact:  {en:'Contact',de:'Kontakt',es:'Contacto',zh:'联系',ru:'Контакты'},
-    privacy:  {en:'Privacy',de:'Datenschutz',es:'Privacidad',zh:'隐私',ru:'Конфиденциальность'},
+    about: {
+      en: 'About',
+      de: 'Über die App',
+      es: 'Acerca de',
+      zh: '关于',
+      ru: 'Слово'
+    },
+    features: {
+      en: 'Features',
+      de: 'Funktionen',
+      es: 'Funciones',
+      zh: '功能',
+      ru: 'Возможности'
+    },
+    contact: {
+      en: 'Contact',
+      de: 'Kontakt',
+      es: 'Contacto',
+      zh: '联系',
+      ru: 'Контакты'
+    },
+    privacy: {
+      en: 'Privacy',
+      de: 'Datenschutz',
+      es: 'Privacidad',
+      zh: '隐私',
+      ru: 'Конфиденциальность'
+    },
+    terms: {
+      en: 'Terms',
+      de: 'AGB',
+      es: 'Términos',
+      zh: '条款',
+      ru: 'Условия'
+    }
   };
+  
   document.querySelectorAll('[data-nav]').forEach(a => {
-    const k = a.dataset.nav; if (navMap[k]) a.textContent = navMap[k][l] || navMap[k].en;
+    const k = a.dataset.nav;
+    if (navMap[k]) {
+      a.textContent = navMap[k][l] || navMap[k].en;
+    }
   });
+  
   renderCols();
 }
 
