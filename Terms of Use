@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Use — Timepact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-top:    #FCEFEC;
+    --bg-mid:    #F7F2EB;
+    --bg-bot:    #F2EDE0;
+    --brown:     #52330F;
+    --amber:     #9B6A1E;
+    --amber-dim: rgba(155,106,30,0.25);
+    --text:      rgba(82,51,15,0.85);
+    --muted:     rgba(82,51,15,0.50);
+    --dim:       rgba(82,51,15,0.08);
+    --card-bg:   rgba(255,255,255,0.55);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bot) 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .bg-columns {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .col-left, .col-right {
+    position: absolute;
+    top: 0;
+    width: 210px;
+    display: flex;
+    flex-direction: column;
+  }
+  .col-left  { left: 0; }
+  .col-right { right: 0; text-align: right; }
+
+  .era-item {
+    padding: 16px 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--brown);
+    opacity: 0;
+    transition: opacity 2s ease;
+  }
+
+  .era-item.visible { opacity: 0.30; }
+  .era-item.bright  { opacity: 0.55; }
+
+  .era-item .year {
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: linear-gradient(to bottom, rgba(252,239,236,0.97) 0%, rgba(252,239,236,0) 100%);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    letter-spacing: 0.25em;
+    color: var(--amber);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--amber); }
+
+  .lang-select {
+    background: transparent;
+    border: 1px solid var(--amber-dim);
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .lang-select:hover { border-color: var(--amber); color: var(--amber); }
+  .lang-select option { background: #f7f2eb; }
+
+  main { position: relative; z-index: 10; }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 260px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 1100px) { section { padding: 100px 160px 60px; } }
+  @media (max-width: 800px)  {
+    section { padding: 100px 36px 60px; }
+    .col-left, .col-right { width: 100px; }
+    .era-item { font-size: 11px; padding: 12px 10px; }
+    .nav-links { gap: 16px; }
+  }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--muted);
+    max-width: 580px;
+    margin-bottom: 18px;
+  }
+
+  .privacy-block { margin-bottom: 32px; }
+  .privacy-block h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--brown);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .privacy-block p { max-width: 660px; }
+  .privacy-link { color: var(--amber); text-decoration: none; }
+  .privacy-link:hover { text-decoration: underline; }
+
+  footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 36px;
+    border-top: 1px solid var(--dim);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .il { display: none; }
+  .il.active { display: inline; }</style>
+</head>
+<body>
+
+<div class="bg-columns">
+  <div class="col-left" id="colLeft"></div>
+  <div class="col-right" id="colRight"></div>
+</div>
+
+<nav>
+  <a href="/Timepact/" class="nav-logo">TIMEPACT</a>
+  <ul class="nav-links">
+    <li><a href="/Timepact/#about">About</a></li>
+    <li><a href="/Timepact/#features">Features</a></li>
+    <li><a href="/Timepact/#contact">Contact</a></li>
+    <li><a href="privacy.html">Privacy</a></li>
+    <li><a href="terms.html" style="color:var(--amber);">Terms</a></li>
+    <li>
+      <select class="lang-select" id="langSelect">
+        <option value="en">EN</option>
+        <option value="de">DE</option>
+        <option value="es">ES</option>
+        <option value="zh">中文</option>
+        <option value="ru">RU</option>
+      </select>
+    </li>
+  </ul>
+</nav>
+
+<main>
+<section style="min-height:100vh;padding:140px 260px 80px;max-width:1400px;margin:0 auto;">
+  <p class="section-label">Terms of Use</p>
+  <h1 style="font-family:'Cinzel',serif;font-size:clamp(32px,5vw,56px);font-weight:600;color:var(--brown);line-height:1;letter-spacing:0.06em;margin-bottom:30px;">Educational content — use at your own discretion</h1>
+
+  <div class="privacy-block">
+    <h3>Apple Standard EULA</h3>
+    <p>This application is licensed to you under the <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" class="privacy-link">Apple Standard End User License Agreement (EULA)</a>, which governs your use of Timepact. By using the app, you agree to these terms.</p>
+  </div>
+
+  <div class="privacy-block" style="border-left:3px solid var(--amber);padding-left:20px;background:var(--card-bg);border-radius:4px;">
+    <h3>Educational Content Disclaimer</h3>
+    <p><strong>Timepact is an educational tool</strong> that presents historical, prehistoric, and geological information based on current scientific consensus.</p>
+    <p><strong>Important</strong>: Dates, events, and descriptions may contain inaccuracies or simplifications. The app is designed for general educational and entertainment purposes, not for academic research or critical decision-making.</p>
+    <p>Some event dates are approximate and may vary between sources. Always verify critical information with primary sources.</p>
+  </div>
+
+  <div class="privacy-block">
+    <h3>User-Generated Content</h3>
+    <p>You may add your own events, collections, and notes within the app. This data stays on your device and iCloud account. The developer has no access to your content and is not responsible for it.</p>
+  </div>
+
+  <div class="privacy-block">
+    <h3>Limitation of Liability</h3>
+    <p>The app is provided "as is" without warranties of any kind. To the fullest extent permitted by law, the developer is not liable for any damages arising from your use of the app or reliance on its content.</p>
+  </div>
+
+  <div class="privacy-block">
+    <h3>Changes to These Terms</h3>
+    <p>We may update these terms from time to time. Continued use of the app constitutes acceptance of the updated terms.</p>
+    <p style="margin-top:12px;"><em>Last updated: August 2026</em></p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <span style="font-family:'Cinzel',serif;letter-spacing:0.22em;color:var(--amber)">TIMEPACT</span>
+  &nbsp;·&nbsp;
+  <a href="privacy.html" style="color:var(--muted);text-decoration:none;">Privacy</a>
+  &nbsp;·&nbsp;
+  <a href="terms.html" style="color:var(--muted);text-decoration:none;">Terms</a>
+  &nbsp;·&nbsp;
+  <span id="fyear"></span>
+</footer>
+
+<script>
+/* --- ТОТ ЖЕ САМЫЙ JS, ЧТО В privacy.html (скопируйте) --- */
+</script>
+</body>
+</html>
