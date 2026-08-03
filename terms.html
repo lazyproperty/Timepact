@@ -157,11 +157,21 @@
     margin-bottom: 18px;
   }
 
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 600;
+    color: var(--brown);
+    line-height: 1;
+    letter-spacing: 0.06em;
+    margin-bottom: 30px;
+  }
+
   p {
     font-size: 15px;
     line-height: 1.85;
     color: var(--muted);
-    max-width: 580px;
+    max-width: 660px;
     margin-bottom: 18px;
   }
 
@@ -189,8 +199,12 @@
     letter-spacing: 0.1em;
   }
 
+  [data-lang] { display: none; }
+  [data-lang].active { display: block; }
+
   .il { display: none; }
-  .il.active { display: inline; }</style>
+  .il.active { display: inline; }
+</style>
 </head>
 <body>
 
@@ -202,11 +216,41 @@
 <nav>
   <a href="/Timepact/" class="nav-logo">TIMEPACT</a>
   <ul class="nav-links">
-    <li><a href="/Timepact/#about">About</a></li>
-    <li><a href="/Timepact/#features">Features</a></li>
-    <li><a href="/Timepact/#contact">Contact</a></li>
-    <li><a href="privacy.html">Privacy</a></li>
-    <li><a href="terms.html" style="color:var(--amber);">Terms</a></li>
+    <li><a href="/Timepact/#about">
+      <span class="il active" data-l="en">About</span>
+      <span class="il" data-l="de">Über</span>
+      <span class="il" data-l="es">Acerca</span>
+      <span class="il" data-l="zh">关于</span>
+      <span class="il" data-l="ru">О приложении</span>
+    </a></li>
+    <li><a href="/Timepact/#features">
+      <span class="il active" data-l="en">Features</span>
+      <span class="il" data-l="de">Funktionen</span>
+      <span class="il" data-l="es">Funciones</span>
+      <span class="il" data-l="zh">功能</span>
+      <span class="il" data-l="ru">Возможности</span>
+    </a></li>
+    <li><a href="/Timepact/#contact">
+      <span class="il active" data-l="en">Contact</span>
+      <span class="il" data-l="de">Kontakt</span>
+      <span class="il" data-l="es">Contacto</span>
+      <span class="il" data-l="zh">联系</span>
+      <span class="il" data-l="ru">Контакты</span>
+    </a></li>
+    <li><a href="privacy.html">
+      <span class="il active" data-l="en">Privacy</span>
+      <span class="il" data-l="de">Datenschutz</span>
+      <span class="il" data-l="es">Privacidad</span>
+      <span class="il" data-l="zh">隐私</span>
+      <span class="il" data-l="ru">Конфиденциальность</span>
+    </a></li>
+    <li><a href="terms.html" style="color:var(--amber);">
+      <span class="il active" data-l="en">Terms</span>
+      <span class="il" data-l="de">Nutzungsbedingungen</span>
+      <span class="il" data-l="es">Términos</span>
+      <span class="il" data-l="zh">条款</span>
+      <span class="il" data-l="ru">Условия</span>
+    </a></li>
     <li>
       <select class="lang-select" id="langSelect">
         <option value="en">EN</option>
@@ -221,35 +265,121 @@
 
 <main>
 <section style="min-height:100vh;padding:140px 260px 80px;max-width:1400px;margin:0 auto;">
-  <p class="section-label">Terms of Use</p>
-  <h1 style="font-family:'Cinzel',serif;font-size:clamp(32px,5vw,56px);font-weight:600;color:var(--brown);line-height:1;letter-spacing:0.06em;margin-bottom:30px;">Educational content — use at your own discretion</h1>
+  <p class="section-label">
+    <span class="il active" data-l="en">Terms of Use</span>
+    <span class="il" data-l="de">Nutzungsbedingungen</span>
+    <span class="il" data-l="es">Términos de uso</span>
+    <span class="il" data-l="zh">使用条款</span>
+    <span class="il" data-l="ru">Условия использования</span>
+  </p>
+  <h1>
+    <span class="il active" data-l="en">Educational content — use at your own discretion</span>
+    <span class="il" data-l="de">Bildungsinhalte — Nutzung auf eigene Verantwortung</span>
+    <span class="il" data-l="es">Contenido educativo — úsalo bajo tu propio criterio</span>
+    <span class="il" data-l="zh">教育内容 — 请自行判断使用</span>
+    <span class="il" data-l="ru">Образовательный контент — используйте на своё усмотрение</span>
+  </h1>
 
+  <!-- 1. Apple Standard EULA -->
   <div class="privacy-block">
-    <h3>Apple Standard EULA</h3>
-    <p>This application is licensed to you under the <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" class="privacy-link">Apple Standard End User License Agreement (EULA)</a>, which governs your use of Timepact. By using the app, you agree to these terms.</p>
+    <h3>
+      <span class="il active" data-l="en">Apple Standard EULA</span>
+      <span class="il" data-l="de">Apple Standard-EULA</span>
+      <span class="il" data-l="es">EULA estándar de Apple</span>
+      <span class="il" data-l="zh">Apple 标准最终用户许可协议</span>
+      <span class="il" data-l="ru">Стандартное EULA Apple</span>
+    </h3>
+    <p data-lang="en" class="active">This application is licensed to you under the <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" class="privacy-link">Apple Standard End User License Agreement (EULA)</a>, which governs your use of Timepact. By using the app, you agree to these terms.</p>
+    <p data-lang="de">Diese Anwendung wird Ihnen unter der <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" class="privacy-link">Apple Standard-Endbenutzer-Lizenzvereinbarung (EULA)</a> lizenziert, die Ihre Nutzung von Timepact regelt. Durch die Nutzung der App stimmen Sie diesen Bedingungen zu.</p>
+    <p data-lang="es">Esta aplicación se te concede bajo licencia a través del <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" class="privacy-link">Acuerdo de Licencia de Usuario Final Estándar de Apple (EULA)</a>, que rige tu uso de Timepact. Al usar la app, aceptas estos términos.</p>
+    <p data-lang="zh">本应用根据 <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" class="privacy-link">Apple 标准最终用户许可协议 (EULA)</a> 授权给您，该协议管辖您对 Timepact 的使用。使用本应用即表示您同意这些条款。</p>
+    <p data-lang="ru">Это приложение лицензировано вам в соответствии с <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" class="privacy-link">Стандартным лицензионным соглашением с конечным пользователем Apple (EULA)</a>, которое регулирует использование Timepact. Используя приложение, вы соглашаетесь с этими условиями.</p>
   </div>
 
+  <!-- 2. Educational Content Disclaimer -->
   <div class="privacy-block" style="border-left:3px solid var(--amber);padding-left:20px;background:var(--card-bg);border-radius:4px;">
-    <h3>Educational Content Disclaimer</h3>
-    <p><strong>Timepact is an educational tool</strong> that presents historical, prehistoric, and geological information based on current scientific consensus.</p>
-    <p><strong>Important</strong>: Dates, events, and descriptions may contain inaccuracies or simplifications. The app is designed for general educational and entertainment purposes, not for academic research or critical decision-making.</p>
-    <p>Some event dates are approximate and may vary between sources. Always verify critical information with primary sources.</p>
+    <h3>
+      <span class="il active" data-l="en">Educational Content Disclaimer</span>
+      <span class="il" data-l="de">Haftungsausschluss für Bildungsinhalte</span>
+      <span class="il" data-l="es">Descargo de responsabilidad del contenido educativo</span>
+      <span class="il" data-l="zh">教育内容免责声明</span>
+      <span class="il" data-l="ru">Отказ от ответственности за образовательный контент</span>
+    </h3>
+    <p data-lang="en" class="active"><strong>Timepact is an educational tool</strong> that presents historical, prehistoric, and geological information based on current scientific consensus.</p>
+    <p data-lang="en" class="active"><strong>Important</strong>: Dates, events, and descriptions may contain inaccuracies or simplifications. The app is designed for general educational and entertainment purposes, not for academic research or critical decision-making.</p>
+    <p data-lang="en" class="active">Some event dates are approximate and may vary between sources. Always verify critical information with primary sources.</p>
+
+    <p data-lang="de"><strong>Timepact ist ein Bildungswerkzeug</strong>, das historische, prähistorische und geologische Informationen basierend auf dem aktuellen wissenschaftlichen Konsens präsentiert.</p>
+    <p data-lang="de"><strong>Wichtig</strong>: Daten, Ereignisse und Beschreibungen können Ungenauigkeiten oder Vereinfachungen enthalten. Die App ist für allgemeine Bildungs- und Unterhaltungszwecke konzipiert, nicht für akademische Forschung oder kritische Entscheidungsfindung.</p>
+    <p data-lang="de">Einige Ereignisdaten sind ungefähr und können zwischen Quellen variieren. Überprüfen Sie kritische Informationen immer mit primären Quellen.</p>
+
+    <p data-lang="es"><strong>Timepact es una herramienta educativa</strong> que presenta información histórica, prehistórica y geológica basada en el consenso científico actual.</p>
+    <p data-lang="es"><strong>Importante</strong>: Las fechas, eventos y descripciones pueden contener imprecisiones o simplificaciones. La app está diseñada para fines educativos y de entretenimiento general, no para investigación académica o toma de decisiones críticas.</p>
+    <p data-lang="es">Algunas fechas de eventos son aproximadas y pueden variar según la fuente. Siempre verifica la información crítica con fuentes primarias.</p>
+
+    <p data-lang="zh"><strong>Timepact 是一款教育工具</strong>，根据当前科学共识呈现历史、史前和地质信息。</p>
+    <p data-lang="zh"><strong>重要</strong>：日期、事件和描述可能包含不准确或简化之处。本应用仅供一般教育和娱乐用途，不适用于学术研究或关键决策。</p>
+    <p data-lang="zh">某些事件日期为近似值，可能因来源而异。请始终通过主要来源核实关键信息。</p>
+
+    <p data-lang="ru"><strong>Timepact — это образовательный инструмент</strong>, который представляет историческую, доисторическую и геологическую информацию на основе текущего научного консенсуса.</p>
+    <p data-lang="ru"><strong>Важно</strong>: Даты, события и описания могут содержать неточности или упрощения. Приложение предназначено для общих образовательных и развлекательных целей, а не для академических исследований или принятия критических решений.</p>
+    <p data-lang="ru">Некоторые даты событий являются приблизительными и могут различаться в разных источниках. Всегда проверяйте критическую информацию по первоисточникам.</p>
   </div>
 
+  <!-- 3. User-Generated Content -->
   <div class="privacy-block">
-    <h3>User-Generated Content</h3>
-    <p>You may add your own events, collections, and notes within the app. This data stays on your device and iCloud account. The developer has no access to your content and is not responsible for it.</p>
+    <h3>
+      <span class="il active" data-l="en">User-Generated Content</span>
+      <span class="il" data-l="de">Benutzergenerierte Inhalte</span>
+      <span class="il" data-l="es">Contenido generado por el usuario</span>
+      <span class="il" data-l="zh">用户生成内容</span>
+      <span class="il" data-l="ru">Пользовательский контент</span>
+    </h3>
+    <p data-lang="en" class="active">You may add your own events, collections, and notes within the app. This data stays on your device and iCloud account. The developer has no access to your content and is not responsible for it.</p>
+    <p data-lang="de">Sie können eigene Ereignisse, Sammlungen und Notizen in der App hinzufügen. Diese Daten verbleiben auf Ihrem Gerät und iCloud-Konto. Der Entwickler hat keinen Zugriff auf Ihre Inhalte und ist nicht dafür verantwortlich.</p>
+    <p data-lang="es">Puedes añadir tus propios eventos, colecciones y notas dentro de la app. Estos datos permanecen en tu dispositivo y cuenta de iCloud. El desarrollador no tiene acceso a tu contenido y no es responsable del mismo.</p>
+    <p data-lang="zh">您可以在应用内添加自己的事件、合集和笔记。这些数据保留在您的设备和 iCloud 帐户中。开发者无法访问您的内容，也不对其负责。</p>
+    <p data-lang="ru">Вы можете добавлять свои собственные события, коллекции и заметки в приложении. Эти данные остаются на вашем устройстве и в учётной записи iCloud. Разработчик не имеет доступа к вашему контенту и не несёт за него ответственности.</p>
   </div>
 
+  <!-- 4. Limitation of Liability -->
   <div class="privacy-block">
-    <h3>Limitation of Liability</h3>
-    <p>The app is provided "as is" without warranties of any kind. To the fullest extent permitted by law, the developer is not liable for any damages arising from your use of the app or reliance on its content.</p>
+    <h3>
+      <span class="il active" data-l="en">Limitation of Liability</span>
+      <span class="il" data-l="de">Haftungsbeschränkung</span>
+      <span class="il" data-l="es">Limitación de responsabilidad</span>
+      <span class="il" data-l="zh">责任限制</span>
+      <span class="il" data-l="ru">Ограничение ответственности</span>
+    </h3>
+    <p data-lang="en" class="active">The app is provided "as is" without warranties of any kind. To the fullest extent permitted by law, the developer is not liable for any damages arising from your use of the app or reliance on its content.</p>
+    <p data-lang="de">Die App wird "wie besehen" ohne jegliche Gewährleistung bereitgestellt. Im gesetzlich zulässigen Umfang haftet der Entwickler nicht für Schäden, die aus der Nutzung der App oder dem Vertrauen auf deren Inhalte entstehen.</p>
+    <p data-lang="es">La app se proporciona "tal cual" sin garantías de ningún tipo. En la medida máxima permitida por la ley, el desarrollador no es responsable de ningún daño que surja del uso de la app o de la confianza en su contenido.</p>
+    <p data-lang="zh">本应用按"现状"提供，不作任何形式的保证。在法律允许的最大范围内，开发者不对因使用本应用或依赖其内容而产生的任何损害承担责任。</p>
+    <p data-lang="ru">Приложение предоставляется «как есть» без каких-либо гарантий. В максимальной степени, разрешённой законом, разработчик не несёт ответственности за любые убытки, возникшие в результате использования приложения или доверия к его содержанию.</p>
   </div>
 
+  <!-- 5. Changes to These Terms -->
   <div class="privacy-block">
-    <h3>Changes to These Terms</h3>
-    <p>We may update these terms from time to time. Continued use of the app constitutes acceptance of the updated terms.</p>
-    <p style="margin-top:12px;"><em>Last updated: August 2026</em></p>
+    <h3>
+      <span class="il active" data-l="en">Changes to These Terms</span>
+      <span class="il" data-l="de">Änderungen dieser Bedingungen</span>
+      <span class="il" data-l="es">Cambios a estos términos</span>
+      <span class="il" data-l="zh">条款变更</span>
+      <span class="il" data-l="ru">Изменения условий</span>
+    </h3>
+    <p data-lang="en" class="active">We may update these terms from time to time. Continued use of the app constitutes acceptance of the updated terms.</p>
+    <p data-lang="de">Wir können diese Bedingungen von Zeit zu Zeit aktualisieren. Die fortgesetzte Nutzung der App gilt als Akzeptanz der aktualisierten Bedingungen.</p>
+    <p data-lang="es">Podemos actualizar estos términos de vez en cuando. El uso continuado de la app constituye la aceptación de los términos actualizados.</p>
+    <p data-lang="zh">我们可能会不时更新这些条款。继续使用本应用即表示接受更新后的条款。</p>
+    <p data-lang="ru">Мы можем время от времени обновлять эти условия. Продолжение использования приложения означает принятие обновлённых условий.</p>
+
+    <p style="margin-top:12px;"><em>
+      <span class="il active" data-l="en">Last updated: August 2026</span>
+      <span class="il" data-l="de">Zuletzt aktualisiert: August 2026</span>
+      <span class="il" data-l="es">Última actualización: Agosto 2026</span>
+      <span class="il" data-l="zh">最后更新：2026年8月</span>
+      <span class="il" data-l="ru">Последнее обновление: Август 2026</span>
+    </em></p>
   </div>
 </section>
 </main>
@@ -257,15 +387,117 @@
 <footer>
   <span style="font-family:'Cinzel',serif;letter-spacing:0.22em;color:var(--amber)">TIMEPACT</span>
   &nbsp;·&nbsp;
-  <a href="privacy.html" style="color:var(--muted);text-decoration:none;">Privacy</a>
+  <a href="privacy.html" style="color:var(--muted);text-decoration:none;">
+    <span class="il active" data-l="en">Privacy</span>
+    <span class="il" data-l="de">Datenschutz</span>
+    <span class="il" data-l="es">Privacidad</span>
+    <span class="il" data-l="zh">隐私</span>
+    <span class="il" data-l="ru">Конфиденциальность</span>
+  </a>
   &nbsp;·&nbsp;
-  <a href="terms.html" style="color:var(--muted);text-decoration:none;">Terms</a>
+  <a href="terms.html" style="color:var(--muted);text-decoration:none;">
+    <span class="il active" data-l="en">Terms</span>
+    <span class="il" data-l="de">Nutzungsbedingungen</span>
+    <span class="il" data-l="es">Términos</span>
+    <span class="il" data-l="zh">条款</span>
+    <span class="il" data-l="ru">Условия</span>
+  </a>
   &nbsp;·&nbsp;
   <span id="fyear"></span>
 </footer>
 
 <script>
-/* --- ТОТ ЖЕ САМЫЙ JS, ЧТО В privacy.html (скопируйте) --- */
+const EVENTS = [
+  { year:"4.6 Ga", t:{en:"Formation of Earth",de:"Entstehung der Erde",es:"Formación de la Tierra",zh:"地球形成",ru:"Формирование Земли"} },
+  { year:"4.1 Ga", t:{en:"First liquid water",de:"Erstes flüssiges Wasser",es:"Primera agua líquida",zh:"最早的液态水",ru:"Первая жидкая вода"} },
+  { year:"3.8 Ga", t:{en:"First life — prokaryotes",de:"Erstes Leben",es:"Primera vida",zh:"最早的生命",ru:"Первая жизнь"} },
+  { year:"2.4 Ga", t:{en:"Great Oxidation Event",de:"Große Oxidation",es:"Gran Oxidación",zh:"大氧化事件",ru:"Великое окисление"} },
+  { year:"750 Ma", t:{en:"Snowball Earth",de:"Schneeball Erde",es:"Tierra bola de nieve",zh:"雪球地球",ru:"Земля-снежок"} },
+  { year:"541 Ma", t:{en:"Cambrian explosion",de:"Kambrische Explosion",es:"Explosión cámbrica",zh:"寒武纪大爆发",ru:"Кембрийский взрыв"} },
+  { year:"375 Ma", t:{en:"First tetrapods on land",de:"Erste Tetrapoden",es:"Primeros tetrápodos",zh:"首批四足动物",ru:"Первые тетраподы"} },
+  { year:"252 Ma", t:{en:"Permian extinction",de:"Perm-Aussterben",es:"Extinción del Pérmico",zh:"二叠纪大灭绝",ru:"Пермское вымирание"} },
+  { year:"230 Ma", t:{en:"First dinosaurs",de:"Erste Dinosaurier",es:"Primeros dinosaurios",zh:"最早的恐龙",ru:"Первые динозавры"} },
+  { year:"66 Ma",  t:{en:"End of dinosaurs",de:"Ende der Dinosaurier",es:"Fin de los dinosaurios",zh:"恐龙灭绝",ru:"Гибель динозавров"} },
+  { year:"55 Ma",  t:{en:"First primates",de:"Erste Primaten",es:"Primeros primates",zh:"最早的灵长类",ru:"Первые приматы"} },
+  { year:"6 Ma",   t:{en:"Human–chimp split",de:"Mensch-Schimpansen-Split",es:"Separación humano-chimpancé",zh:"人类与黑猩猩分化",ru:"Разделение человека и шимпанзе"} },
+  { year:"300 Ka", t:{en:"Homo sapiens appears",de:"Homo sapiens erscheint",es:"Aparece Homo sapiens",zh:"智人出现",ru:"Появление Homo sapiens"} },
+  { year:"70 Ka",  t:{en:"Out of Africa",de:"Aus-Afrika-Migration",es:"Migración fuera de África",zh:"走出非洲",ru:"Миграция из Африки"} },
+  { year:"12 Ka",  t:{en:"End of last ice age",de:"Ende der Eiszeit",es:"Fin de la glaciación",zh:"末次冰期结束",ru:"Конец ледникового периода"} },
+  { year:"10 Ka",  t:{en:"Agricultural revolution",de:"Agrarrevolution",es:"Revolución agrícola",zh:"农业革命",ru:"Аграрная революция"} },
+  { year:"3500 BCE",t:{en:"Writing invented in Sumer",de:"Schrift in Sumer",es:"Escritura en Sumer",zh:"苏美尔文字",ru:"Письменность в Шумере"} },
+  { year:"2560 BCE",t:{en:"Great Pyramid of Giza",de:"Große Pyramide",es:"Gran Pirámide",zh:"吉萨大金字塔",ru:"Пирамида в Гизе"} },
+  { year:"776 BCE", t:{en:"First Olympic Games",de:"Erste Olympische Spiele",es:"Primeros Juegos Olímpicos",zh:"第一届奥运会",ru:"Первые Олимпийские игры"} },
+  { year:"44 BCE",  t:{en:"Assassination of Caesar",de:"Ermordung Cäsars",es:"Asesinato de César",zh:"恺撒遇刺",ru:"Убийство Цезаря"} },
+  { year:"476 CE",  t:{en:"Fall of Western Rome",de:"Untergang Westroms",es:"Caída de Roma",zh:"西罗马灭亡",ru:"Падение Западного Рима"} },
+  { year:"1066 CE", t:{en:"Battle of Hastings",de:"Schlacht bei Hastings",es:"Batalla de Hastings",zh:"黑斯廷斯战役",ru:"Битва при Гастингсе"} },
+  { year:"1440 CE", t:{en:"Gutenberg's press",de:"Gutenbergs Druckpresse",es:"Imprenta de Gutenberg",zh:"古腾堡印刷机",ru:"Печатный станок Гутенберга"} },
+  { year:"1492 CE", t:{en:"Columbus reaches Americas",de:"Kolumbus in Amerika",es:"Colón llega a América",zh:"哥伦布抵达美洲",ru:"Колумб достигает Америки"} },
+  { year:"1687 CE", t:{en:"Newton's Principia",de:"Newtons Principia",es:"Principia de Newton",zh:"牛顿《原理》",ru:"«Начала» Ньютона"} },
+  { year:"1789 CE", t:{en:"French Revolution",de:"Französische Revolution",es:"Revolución Francesa",zh:"法国大革命",ru:"Французская революция"} },
+  { year:"1859 CE", t:{en:"Darwin: Origin of Species",de:"Darwin: Entstehung der Arten",es:"Darwin: El origen",zh:"达尔文《物种起源》",ru:"Дарвин: Происхождение видов"} },
+  { year:"1903 CE", t:{en:"First airplane flight",de:"Erster Flug",es:"Primer vuelo",zh:"首次飞行",ru:"Первый полёт"} },
+  { year:"1969 CE", t:{en:"Humans on the Moon",de:"Menschen auf dem Mond",es:"Humanos en la Luna",zh:"人类登月",ru:"Люди на Луне"} },
+  { year:"1991 CE", t:{en:"World Wide Web",de:"World Wide Web",es:"World Wide Web",zh:"万维网",ru:"Интернет"} },
+];
+
+let lang = 'en';
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('active', el.dataset.lang === l));
+  document.querySelectorAll('.il[data-l]').forEach(el => el.classList.toggle('active', el.dataset.l === l));
+  document.getElementById('langSelect').value = l;
+  renderCols();
+}
+
+document.getElementById('langSelect').addEventListener('change', e => setLang(e.target.value));
+
+function renderCols() {
+  const L = document.getElementById('colLeft');
+  const R = document.getElementById('colRight');
+  L.innerHTML = ''; R.innerHTML = '';
+  const shuffled = [...EVENTS].sort(() => Math.random() - 0.5);
+  const half = Math.floor(shuffled.length / 2);
+  shuffled.slice(0, half).forEach(e => L.appendChild(makeItem(e)));
+  shuffled.slice(half).forEach(e => R.appendChild(makeItem(e)));
+  setTimeout(animateCols, 80);
+}
+
+function makeItem(e) {
+  const d = document.createElement('div');
+  d.className = 'era-item';
+  const y = document.createElement('span');
+  y.className = 'year';
+  y.textContent = e.year;
+  d.appendChild(y);
+  d.appendChild(document.createTextNode(e.t[lang] || e.t.en));
+  return d;
+}
+
+function animateCols() {
+  const items = [...document.querySelectorAll('.era-item')];
+  items.forEach(item => {
+    setTimeout(() => {
+      item.classList.add('visible');
+      if (Math.random() > 0.55) item.classList.add('bright');
+    }, Math.random() * 2500);
+  });
+
+  setInterval(() => {
+    document.querySelectorAll('.era-item').forEach(item => {
+      if (Math.random() > 0.72) {
+        item.classList.remove('visible', 'bright');
+        setTimeout(() => {
+          if (Math.random() > 0.3) item.classList.add('visible');
+          if (Math.random() > 0.55) item.classList.add('bright');
+        }, 1800 + Math.random() * 3000);
+      }
+    });
+  }, 3500);
+}
+
+document.getElementById('fyear').textContent = new Date().getFullYear();
+renderCols();
 </script>
 </body>
 </html>
