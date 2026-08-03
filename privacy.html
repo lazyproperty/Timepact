@@ -157,11 +157,21 @@
     margin-bottom: 18px;
   }
 
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 600;
+    color: var(--brown);
+    line-height: 1;
+    letter-spacing: 0.06em;
+    margin-bottom: 30px;
+  }
+
   p {
     font-size: 15px;
     line-height: 1.85;
     color: var(--muted);
-    max-width: 580px;
+    max-width: 660px;
     margin-bottom: 18px;
   }
 
@@ -189,6 +199,9 @@
     letter-spacing: 0.1em;
   }
 
+  [data-lang] { display: none; }
+  [data-lang].active { display: block; }
+
   .il { display: none; }
   .il.active { display: inline; }
 </style>
@@ -203,11 +216,41 @@
 <nav>
   <a href="/Timepact/" class="nav-logo">TIMEPACT</a>
   <ul class="nav-links">
-    <li><a href="/Timepact/#about">About</a></li>
-    <li><a href="/Timepact/#features">Features</a></li>
-    <li><a href="/Timepact/#contact">Contact</a></li>
-    <li><a href="privacy.html" style="color:var(--amber);">Privacy</a></li>
-    <li><a href="terms.html">Terms</a></li>
+    <li><a href="/Timepact/#about">
+      <span class="il active" data-l="en">About</span>
+      <span class="il" data-l="de">Über</span>
+      <span class="il" data-l="es">Acerca</span>
+      <span class="il" data-l="zh">关于</span>
+      <span class="il" data-l="ru">О приложении</span>
+    </a></li>
+    <li><a href="/Timepact/#features">
+      <span class="il active" data-l="en">Features</span>
+      <span class="il" data-l="de">Funktionen</span>
+      <span class="il" data-l="es">Funciones</span>
+      <span class="il" data-l="zh">功能</span>
+      <span class="il" data-l="ru">Возможности</span>
+    </a></li>
+    <li><a href="/Timepact/#contact">
+      <span class="il active" data-l="en">Contact</span>
+      <span class="il" data-l="de">Kontakt</span>
+      <span class="il" data-l="es">Contacto</span>
+      <span class="il" data-l="zh">联系</span>
+      <span class="il" data-l="ru">Контакты</span>
+    </a></li>
+    <li><a href="privacy.html" style="color:var(--amber);">
+      <span class="il active" data-l="en">Privacy</span>
+      <span class="il" data-l="de">Datenschutz</span>
+      <span class="il" data-l="es">Privacidad</span>
+      <span class="il" data-l="zh">隐私</span>
+      <span class="il" data-l="ru">Конфиденциальность</span>
+    </a></li>
+    <li><a href="terms.html">
+      <span class="il active" data-l="en">Terms</span>
+      <span class="il" data-l="de">Nutzungsbedingungen</span>
+      <span class="il" data-l="es">Términos</span>
+      <span class="il" data-l="zh">条款</span>
+      <span class="il" data-l="ru">Условия</span>
+    </a></li>
     <li>
       <select class="lang-select" id="langSelect">
         <option value="en">EN</option>
@@ -222,41 +265,136 @@
 
 <main>
 <section style="min-height:100vh;padding:140px 260px 80px;max-width:1400px;margin:0 auto;">
-  <p class="section-label">Privacy Policy</p>
-  <h1 style="font-family:'Cinzel',serif;font-size:clamp(32px,5vw,56px);font-weight:600;color:var(--brown);line-height:1;letter-spacing:0.06em;margin-bottom:30px;">Your data stays on your device</h1>
+  <p class="section-label">
+    <span class="il active" data-l="en">Privacy Policy</span>
+    <span class="il" data-l="de">Datenschutzerklärung</span>
+    <span class="il" data-l="es">Política de privacidad</span>
+    <span class="il" data-l="zh">隐私政策</span>
+    <span class="il" data-l="ru">Политика конфиденциальности</span>
+  </p>
+  <h1>
+    <span class="il active" data-l="en">Your data stays on your device</span>
+    <span class="il" data-l="de">Ihre Daten bleiben auf Ihrem Gerät</span>
+    <span class="il" data-l="es">Tus datos permanecen en tu dispositivo</span>
+    <span class="il" data-l="zh">您的数据保留在您的设备上</span>
+    <span class="il" data-l="ru">Ваши данные остаются на устройстве</span>
+  </h1>
 
+  <!-- 1. Local Storage -->
   <div class="privacy-block">
-    <h3>Local Storage</h3>
-    <p>All events, collections, and settings you create are stored locally on your device using Apple's CoreData framework. You have full control over your data.</p>
+    <h3>
+      <span class="il active" data-l="en">Local Storage</span>
+      <span class="il" data-l="de">Lokale Speicherung</span>
+      <span class="il" data-l="es">Almacenamiento local</span>
+      <span class="il" data-l="zh">本地存储</span>
+      <span class="il" data-l="ru">Локальное хранение</span>
+    </h3>
+    <p data-lang="en" class="active">All events, collections, and settings you create are stored locally on your device using Apple's CoreData framework. You have full control over your data.</p>
+    <p data-lang="de">Alle Ereignisse, Sammlungen und Einstellungen werden lokal auf Ihrem Gerät mit Apples CoreData-Framework gespeichert. Sie haben volle Kontrolle über Ihre Daten.</p>
+    <p data-lang="es">Todos los eventos, colecciones y configuraciones se almacenan localmente en tu dispositivo usando CoreData de Apple. Tienes control total sobre tus datos.</p>
+    <p data-lang="zh">您创建的所有事件、合集和设置都使用 Apple CoreData 本地存储在您的设备上。您对数据拥有完全控制权。</p>
+    <p data-lang="ru">Все события, коллекции и настройки хранятся локально на устройстве через CoreData. Вы полностью контролируете свои данные.</p>
   </div>
 
+  <!-- 2. iCloud / CloudKit Sync -->
   <div class="privacy-block" style="border-left:3px solid var(--amber);padding-left:20px;background:var(--card-bg);border-radius:4px;">
     <h3>iCloud Sync (CloudKit)</h3>
-    <p><strong>If you're signed into iCloud</strong>, your events and collections sync privately to your own iCloud account via Apple's CloudKit. This allows you to access your data across all your Apple devices.</p>
-    <p><strong>Important</strong>: This data is <strong>not accessible to the developer</strong> and is <strong>not shared with any third parties</strong>. It remains under your iCloud account and is subject to Apple's privacy policy. You can disable iCloud sync at any time in your device settings.</p>
+    <p data-lang="en" class="active"><strong>If you're signed into iCloud</strong>, your events and collections sync privately to your own iCloud account via Apple's CloudKit. This allows you to access your data across all your Apple devices.</p>
+    <p data-lang="en" class="active"><strong>Important</strong>: This data is <strong>not accessible to the developer</strong> and is <strong>not shared with any third parties</strong>. It remains under your iCloud account and is subject to Apple's privacy policy. You can disable iCloud sync at any time in your device settings.</p>
+
+    <p data-lang="de"><strong>Wenn Sie bei iCloud angemeldet sind</strong>, werden Ihre Ereignisse und Sammlungen privat über Apple's CloudKit mit Ihrem iCloud-Konto synchronisiert. Dadurch können Sie auf allen Ihren Apple-Geräten auf Ihre Daten zugreifen.</p>
+    <p data-lang="de"><strong>Wichtig</strong>: Diese Daten sind <strong>für den Entwickler nicht zugänglich</strong> und werden <strong>nicht an Dritte weitergegeben</strong>. Sie verbleiben in Ihrem iCloud-Konto und unterliegen der Datenschutzrichtlinie von Apple. Sie können die iCloud-Synchronisierung jederzeit in den Geräteeinstellungen deaktivieren.</p>
+
+    <p data-lang="es"><strong>Si estás conectado a iCloud</strong>, tus eventos y colecciones se sincronizan privadamente con tu cuenta de iCloud mediante CloudKit. Esto te permite acceder a tus datos en todos tus dispositivos Apple.</p>
+    <p data-lang="es"><strong>Importante</strong>: Estos datos <strong>no son accesibles para el desarrollador</strong> y <strong>no se comparten con terceros</strong>. Permanecen en tu cuenta de iCloud y están sujetos a la política de privacidad de Apple. Puedes desactivar la sincronización de iCloud en cualquier momento en los ajustes de tu dispositivo.</p>
+
+    <p data-lang="zh"><strong>如果您已登录 iCloud</strong>，您的事件和合集将通过 Apple 的 CloudKit 私下同步到您自己的 iCloud 帐户。这让您可以在所有 Apple 设备上访问您的数据。</p>
+    <p data-lang="zh"><strong>重要</strong>：这些数据<strong>开发者无法访问</strong>，且<strong>不与第三方共享</strong>。它们保留在您的 iCloud 帐户中，并受 Apple 隐私政策的约束。您可以随时在设备设置中禁用 iCloud 同步。</p>
+
+    <p data-lang="ru"><strong>Если вы вошли в iCloud</strong>, ваши события и коллекции приватно синхронизируются с вашей собственной учётной записью iCloud через CloudKit. Это позволяет вам получать доступ к данным на всех ваших устройствах Apple.</p>
+    <p data-lang="ru"><strong>Важно</strong>: Эти данные <strong>недоступны разработчику</strong> и <strong>не передаются третьим лицам</strong>. Они остаются в вашей учётной записи iCloud и подпадают под политику конфиденциальности Apple. Вы можете отключить синхронизацию iCloud в любое время в настройках устройства.</p>
   </div>
 
+  <!-- 3. Wikipedia API -->
   <div class="privacy-block">
     <h3>Wikipedia API</h3>
-    <p>When searching for events or viewing "On This Day", the app makes requests to the public Wikipedia API. These requests contain no personal identifiers. No search history is stored or transmitted.</p>
+    <p data-lang="en" class="active">When searching for events or viewing "On This Day", the app makes requests to the public Wikipedia API. These requests contain no personal identifiers. No search history is stored or transmitted.</p>
+    <p data-lang="de">Bei der Suche nach Ereignissen oder beim Anzeigen von "An diesem Tag" stellt die App Anfragen an die öffentliche Wikipedia-API. Diese Anfragen enthalten keine persönlichen Identifikatoren. Es wird kein Suchverlauf gespeichert oder übertragen.</p>
+    <p data-lang="es">Al buscar eventos o ver "Tal día como hoy", la app realiza solicitudes a la API pública de Wikipedia. Estas solicitudes no incluyen identificadores personales. No se almacena ni transmite historial de búsqueda.</p>
+    <p data-lang="zh">搜索事件或查看"历史上的今天"时，应用会向公共维基百科 API 发出请求。这些请求不包含任何个人标识符。不会存储或传输搜索历史。</p>
+    <p data-lang="ru">При поиске событий или просмотре «В этот день» приложение обращается к публичному API Википедии. Запросы не содержат личных идентификаторов. История поиска не сохраняется и не передаётся.</p>
   </div>
 
+  <!-- 4. No Third Parties -->
   <div class="privacy-block">
-    <h3>No Third Parties</h3>
-    <p>Timepact contains no advertising SDKs, no analytics trackers, and no third-party data sharing of any kind. We do not sell, rent, or trade your information.</p>
-    <p><strong>Future note</strong>: If we ever introduce ads or analytics, this policy will be updated and you will be notified.</p>
+    <h3>
+      <span class="il active" data-l="en">No Third Parties</span>
+      <span class="il" data-l="de">Keine Dritten</span>
+      <span class="il" data-l="es">Sin terceros</span>
+      <span class="il" data-l="zh">无第三方</span>
+      <span class="il" data-l="ru">Без третьих лиц</span>
+    </h3>
+    <p data-lang="en" class="active">Timepact contains no advertising SDKs, no analytics trackers, and no third-party data sharing of any kind. We do not sell, rent, or trade your information.</p>
+    <p data-lang="en" class="active"><strong>Future note</strong>: If we ever introduce ads or analytics, this policy will be updated and you will be notified.</p>
+
+    <p data-lang="de">Timepact enthält keine Werbung, keine Analyse-SDKs, kein Tracking und keine Datenweitergabe an Dritte. Wir verkaufen, vermieten oder handeln nicht mit Ihren Informationen.</p>
+    <p data-lang="de"><strong>Hinweis für die Zukunft</strong>: Falls wir jemals Werbung oder Analysen einführen, wird diese Richtlinie aktualisiert und Sie werden benachrichtigt.</p>
+
+    <p data-lang="es">Timepact no contiene publicidad, SDKs de análisis, rastreo ni intercambio de datos con terceros. No vendemos, alquilamos ni comercializamos tu información.</p>
+    <p data-lang="es"><strong>Nota futura</strong>: Si alguna vez introducimos anuncios o análisis, esta política se actualizará y se te notificará.</p>
+
+    <p data-lang="zh">Timepact 不含广告 SDK、分析追踪器，也不与任何第三方共享数据。我们不销售、出租或交易您的信息。</p>
+    <p data-lang="zh"><strong>未来说明</strong>：如果我们未来引入广告或分析功能，此政策将更新并通知您。</p>
+
+    <p data-lang="ru">Timepact не содержит рекламы, аналитических SDK, трекеров и не передаёт данные третьим лицам. Мы не продаём, не сдаём в аренду и не торгуем вашей информацией.</p>
+    <p data-lang="ru"><strong>На будущее</strong>: Если мы когда-либо введём рекламу или аналитику, эта политика будет обновлена, и вы будете уведомлены.</p>
   </div>
 
+  <!-- 5. Contact -->
   <div class="privacy-block">
-    <h3>Contact</h3>
-    <p>Privacy questions: <a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+    <h3>
+      <span class="il active" data-l="en">Contact</span>
+      <span class="il" data-l="de">Kontakt</span>
+      <span class="il" data-l="es">Contacto</span>
+      <span class="il" data-l="zh">联系</span>
+      <span class="il" data-l="ru">Контакты</span>
+    </h3>
+    <p data-lang="en" class="active">Privacy questions: <a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+    <p data-lang="de">Datenschutzfragen: <a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+    <p data-lang="es">Preguntas de privacidad: <a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+    <p data-lang="zh">隐私问题：<a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
+    <p data-lang="ru">Вопросы конфиденциальности: <a href="mailto:lazyproperty@icloud.com" class="privacy-link">lazyproperty@icloud.com</a></p>
   </div>
 
+  <!-- 6. GDPR / CCPA -->
   <div class="privacy-block" style="margin-top:40px;padding-top:30px;border-top:1px solid var(--dim);font-size:13px;color:var(--muted);">
-    <p><strong>GDPR (Europe)</strong>: Since we don't collect personal data, there's nothing to export or delete. All your data stays on your device and iCloud account.</p>
-    <p><strong>CCPA (California)</strong>: We don't sell personal information. We don't share data with third parties.</p>
-    <p><strong>Children's privacy</strong>: Timepact is not directed at children under 13, but contains only educational content with no data collection.</p>
-    <p style="margin-top:12px;"><em>Last updated: August 2026</em></p>
+    <p data-lang="en" class="active"><strong>GDPR (Europe)</strong>: Since we don't collect personal data, there's nothing to export or delete. All your data stays on your device and iCloud account.</p>
+    <p data-lang="en"><strong>CCPA (California)</strong>: We don't sell personal information. We don't share data with third parties.</p>
+    <p data-lang="en"><strong>Children's privacy</strong>: Timepact is not directed at children under 13, but contains only educational content with no data collection.</p>
+
+    <p data-lang="de"><strong>GDPR (Europa)</strong>: Da wir keine personenbezogenen Daten erheben, gibt es nichts zu exportieren oder zu löschen. Alle Ihre Daten verbleiben auf Ihrem Gerät und iCloud-Konto.</p>
+    <p data-lang="de"><strong>CCPA (Kalifornien)</strong>: Wir verkaufen keine persönlichen Daten. Wir geben keine Daten an Dritte weiter.</p>
+    <p data-lang="de"><strong>Datenschutz für Kinder</strong>: Timepact richtet sich nicht an Kinder unter 13 Jahren, enthält aber nur Bildungsinhalte ohne Datenerhebung.</p>
+
+    <p data-lang="es"><strong>GDPR (Europa)</strong>: Como no recopilamos datos personales, no hay nada que exportar o eliminar. Todos tus datos permanecen en tu dispositivo y cuenta de iCloud.</p>
+    <p data-lang="es"><strong>CCPA (California)</strong>: No vendemos información personal. No compartimos datos con terceros.</p>
+    <p data-lang="es"><strong>Privacidad infantil</strong>: Timepact no está dirigido a menores de 13 años, pero contiene solo contenido educativo sin recopilación de datos.</p>
+
+    <p data-lang="zh"><strong>GDPR（欧洲）</strong>：由于我们不收集个人数据，因此无需导出或删除任何内容。您的所有数据保留在您的设备和 iCloud 帐户中。</p>
+    <p data-lang="zh"><strong>CCPA（加州）</strong>：我们不销售个人信息。我们不与第三方共享数据。</p>
+    <p data-lang="zh"><strong>儿童隐私</strong>：Timepact 不面向 13 岁以下儿童，但仅包含教育内容，不收集数据。</p>
+
+    <p data-lang="ru"><strong>GDPR (Европа)</strong>: Поскольку мы не собираем личные данные, нечего экспортировать или удалять. Все ваши данные остаются на вашем устройстве и в учётной записи iCloud.</p>
+    <p data-lang="ru"><strong>CCPA (Калифорния)</strong>: Мы не продаём личную информацию. Мы не передаём данные третьим лицам.</p>
+    <p data-lang="ru"><strong>Детская приватность</strong>: Timepact не ориентирован на детей младше 13 лет, но содержит только образовательный контент без сбора данных.</p>
+
+    <p style="margin-top:12px;"><em>
+      <span class="il active" data-l="en">Last updated: August 2026</span>
+      <span class="il" data-l="de">Zuletzt aktualisiert: August 2026</span>
+      <span class="il" data-l="es">Última actualización: Agosto 2026</span>
+      <span class="il" data-l="zh">最后更新：2026年8月</span>
+      <span class="il" data-l="ru">Последнее обновление: Август 2026</span>
+    </em></p>
   </div>
 </section>
 </main>
@@ -264,9 +402,21 @@
 <footer>
   <span style="font-family:'Cinzel',serif;letter-spacing:0.22em;color:var(--amber)">TIMEPACT</span>
   &nbsp;·&nbsp;
-  <a href="privacy.html" style="color:var(--muted);text-decoration:none;">Privacy</a>
+  <a href="privacy.html" style="color:var(--muted);text-decoration:none;">
+    <span class="il active" data-l="en">Privacy</span>
+    <span class="il" data-l="de">Datenschutz</span>
+    <span class="il" data-l="es">Privacidad</span>
+    <span class="il" data-l="zh">隐私</span>
+    <span class="il" data-l="ru">Конфиденциальность</span>
+  </a>
   &nbsp;·&nbsp;
-  <a href="terms.html" style="color:var(--muted);text-decoration:none;">Terms</a>
+  <a href="terms.html" style="color:var(--muted);text-decoration:none;">
+    <span class="il active" data-l="en">Terms</span>
+    <span class="il" data-l="de">Nutzungsbedingungen</span>
+    <span class="il" data-l="es">Términos</span>
+    <span class="il" data-l="zh">条款</span>
+    <span class="il" data-l="ru">Условия</span>
+  </a>
   &nbsp;·&nbsp;
   <span id="fyear"></span>
 </footer>
@@ -311,6 +461,7 @@ function setLang(l) {
   lang = l;
   document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('active', el.dataset.lang === l));
   document.querySelectorAll('.il[data-l]').forEach(el => el.classList.toggle('active', el.dataset.l === l));
+  document.getElementById('langSelect').value = l;
   renderCols();
 }
 
