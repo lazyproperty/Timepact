@@ -444,13 +444,18 @@ let lang = 'en';
 
 function setLang(l) {
   lang = l;
+  localStorage.setItem('timepact_lang', l);
+
   document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('active', el.dataset.lang === l));
   document.querySelectorAll('.il[data-l]').forEach(el => el.classList.toggle('active', el.dataset.l === l));
   document.getElementById('langSelect').value = l;
   renderCols();
 }
 
-document.getElementById('langSelect').addEventListener('change', e => setLang(e.target.value));
+document.getElementById('fyear').textContent = new Date().getFullYear();
+
+const savedLang = localStorage.getItem('timepact_lang') || 'en';
+setLang(savedLang);
 
 function renderCols() {
   const L = document.getElementById('colLeft');
