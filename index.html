@@ -698,6 +698,8 @@ let lang = 'en';
 
 function setLang(l) {
   lang = l;
+  localStorage.setItem('timepact_lang', l);   // ← добавить
+
   document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('active', el.dataset.lang === l));
   document.querySelectorAll('.il[data-l]').forEach(el => el.classList.toggle('active', el.dataset.l === l));
   
@@ -746,7 +748,11 @@ function setLang(l) {
     }
   });
   
-  renderCols();
+ document.getElementById('fyear').textContent = new Date().getFullYear();
+
+const savedLang = localStorage.getItem('timepact_lang') || 'en';
+document.getElementById('langSelect').value = savedLang;
+setLang(savedLang);
 }
 
 document.getElementById('langSelect').addEventListener('change', e => setLang(e.target.value));
